@@ -23,6 +23,9 @@ app.use(bodyParser.urlencoded({
     parameterLimit: 50000
 }))
 
+app.set('views', 'views');
+app.set('view engine', 'pug');
+
 app.use(bodyParser())
 
 app.use('/',appRouter)

@@ -33,8 +33,8 @@ DB.prototype.insertDocuments=function(collection_name,data){
              if(err){
              	reject({'status':'error','message':"Error occurred while inserting to database",'dev_message':err})
              }
-            console.log("result",result)
-            resolve({'status':'success','message':'document inserted successfully'})
+           
+            resolve(result)
        });
 	})
 }
@@ -48,8 +48,7 @@ DB.prototype.findDocument=function(collection_name,data){
             if(err){
                 reject({'status':'error','message':'Error occured while finding login'})
             }
-        console.log("result",result)
-        resolve({'status':'success','message':'logged in user successfully','result':result})
+        resolve(result)
         })
     })
 }

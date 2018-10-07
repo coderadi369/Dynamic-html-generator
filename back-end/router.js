@@ -4,6 +4,7 @@ const {config}=require(`${__base}/utils/config`)
 const cors = require('cors')
 const mongo=require('mongodb')
 
+
 var corsOptions = {
   credentials: true
 }
@@ -21,7 +22,8 @@ router.post('/', (req,res)=>{
     	  return database.insertDocuments('htmldata',req.body)
     }).then(function(data){
     	 database.close()
-    	 return res.status(200).json({'status':'success','message':'htmldata inserted successfully'})
+    	 console.log("data",data)
+    	 return res.status(200).json({'url':'localhost:4000/htmlview/'+data.ops[0]._id})
 	}).catch(function(error){
 		 console.log("eroor",error)
 		 database.close()
@@ -37,13 +39,16 @@ router.get('/htmlview/:id',(req,res)=>{
 	console.log("req.params",req.params.id)
 	database.connect(mongodb.defaultUri+'/'+mongodb.defaultDatabase).then(()=>{
 		return database.findDocument('htmldata',{'_id':new mongo.ObjectID(req.params.id)})
-	}).then(function(data){
+	}).then(function(result){
 		database.close()
-		return res.status(200).json({'status':'success','message':'document found out'})
+		if(result.data)
+			res.render('home',{data:result.data})
+		else
+			res.status(400).json({'message':'HTML view not found'})
 	}).catch(function(error){
 		database.close()
 		console.log(error)
-		return res.status(500).json({'status':'error','message':'document was not found'})
+		return res.status(500).json({'status':'error','message':'html view was not found'})
 	})
 	
 })
