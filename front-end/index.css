@@ -1,0 +1,13 @@
+.pageBuilder{
+    display:block;
+    width:100%;
+    height:80%;
+    border-style:solid;
+}
+
+.dragBuilder{
+	display:block;
+	width:100%;
+	height:80%;
+	border-style:outset;
+}
